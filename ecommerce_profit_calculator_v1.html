@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Free e-commerce profit calculator. Estimate true profit, profit margin, break-even CAC and ROAS for every sale.">
+<title>E-commerce Profit Calculator — Free</title>
+<style>
+:root{
+  --bg:#f7f8fb;--surface:#fff;--ink:#111827;--muted:#667085;--line:#e5e7eb;
+  --brand:#2563eb;--brand-dark:#1d4ed8;--brand-soft:#eff6ff;--green:#16803c;
+  --green-soft:#ecfdf3;--amber:#b45309;--shadow:0 14px 40px rgba(15,23,42,.07);--r:20px
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+a{color:inherit;text-decoration:none}
+.container{width:min(1120px,calc(100% - 32px));margin:auto}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font-weight:850;letter-spacing:-.03em;font-size:19px}.logo span{color:var(--brand)}
+.navlinks{display:flex;gap:24px;color:#475467;font-size:14px;font-weight:600}
+.navlinks a:hover{color:var(--brand)}
+.hero{padding:62px 0 36px;text-align:center}
+.eyebrow{display:inline-flex;padding:7px 11px;border-radius:999px;background:var(--brand-soft);color:var(--brand-dark);font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+h1{font-size:clamp(38px,6vw,66px);line-height:.98;letter-spacing:-.055em;max-width:850px;margin:18px auto 18px}
+.hero p{max-width:680px;margin:0 auto;color:var(--muted);font-size:18px;line-height:1.55}
+.hero-note{margin-top:16px;font-size:12px;color:#98a2b3}
+.calculator{display:grid;grid-template-columns:minmax(0,1fr) minmax(350px,.92fr);gap:22px;align-items:start;padding:20px 0 70px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow)}
+.form{padding:28px}.results{padding:28px;position:sticky;top:18px}
+.currencybar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:25px;padding:12px 14px;background:#f8fafc;border:1px solid var(--line);border-radius:14px}
+.currencybar label{margin:0;font-size:13px;font-weight:750}.currencybar select{border:1px solid #d0d5dd;border-radius:9px;background:white;padding:8px 10px;font:inherit;font-weight:700}
+.section{padding-bottom:24px;margin-bottom:24px;border-bottom:1px solid var(--line)}.section:last-of-type{border-bottom:0;margin-bottom:0;padding-bottom:0}
+.section h2{font-size:17px;margin:0 0 5px;letter-spacing:-.01em}.section p{font-size:13px;color:var(--muted);margin:0 0 16px;line-height:1.45}
+.field{margin-bottom:16px}.field:last-child{margin-bottom:0}
+label{display:flex;justify-content:space-between;gap:12px;font-weight:700;font-size:14px;margin-bottom:7px}
+.hint{display:block;color:var(--muted);font-size:12px;font-weight:400;margin-top:3px}
+.inputrow{position:relative}input,select{font:inherit}input[type=number]{width:100%;border:1px solid #d0d5dd;border-radius:11px;padding:12px 13px;background:#fff;font-size:16px;outline:none}
+input[type=number]:focus{border-color:var(--brand);box-shadow:0 0 0 4px var(--brand-soft)}
+.prefix,.suffix{position:absolute;top:50%;transform:translateY(-50%);color:#667085;pointer-events:none;font-size:15px}.prefix{left:13px}.suffix{right:13px}
+.hasprefix{padding-left:29px!important}.hassuffix{padding-right:35px!important}
+.calc{width:100%;border:0;border-radius:12px;background:var(--brand);color:#fff;padding:15px 16px;font-size:16px;font-weight:800;cursor:pointer;margin-top:22px}.calc:hover{background:var(--brand-dark)}
+.note{text-align:center;color:var(--muted);font-size:11px;margin:11px 0 0}
+.hero-result{background:var(--green-soft);border:1px solid #b7ebca;border-radius:16px;padding:21px;margin-bottom:18px}
+.hero-label{font-size:12px;font-weight:850;color:var(--green);text-transform:uppercase;letter-spacing:.06em}
+.hero-profit{font-size:42px;font-weight:900;letter-spacing:-.045em;margin:4px 0}.hero-margin{font-size:14px;color:#31543d}
+.status{display:inline-flex;margin-top:12px;padding:7px 10px;border-radius:999px;background:#fff;font-size:12px;font-weight:800;color:var(--green)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-bottom:18px}.stat{border:1px solid var(--line);border-radius:13px;padding:13px}.stat span{display:block;color:var(--muted);font-size:11px;margin-bottom:5px}.stat strong{font-size:17px}
+.callout{border:1px solid #bfdbfe;background:var(--brand-soft);border-radius:16px;padding:17px;margin-bottom:18px}.callout .title{font-weight:850;margin-bottom:5px}.big{font-size:28px;font-weight:900;color:var(--brand-dark)}.callout p{margin:5px 0 0;color:#475467;font-size:12px;line-height:1.5}
+.detail{border-top:1px solid var(--line);padding-top:17px}.detail h3{font-size:15px;margin:0 0 10px}.row{display:flex;justify-content:space-between;gap:15px;padding:7px 0;font-size:13px}.row span:first-child{color:var(--muted)}.row strong{font-variant-numeric:tabular-nums}
+.whatif{margin-top:20px;padding:18px;border:1px solid var(--line);border-radius:15px}.whatif h3{margin:0 0 4px;font-size:15px}.whatif p{margin:0 0 12px;color:var(--muted);font-size:12px}.whatif input[type=range]{width:100%;accent-color:var(--brand)}.rangeval{text-align:right;font-weight:800;font-size:13px;margin-top:5px}
+details{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}summary{cursor:pointer;font-weight:800;font-size:14px}.term{padding:12px 0;border-bottom:1px solid var(--line)}.term:last-child{border-bottom:0}.term b{font-size:13px}.term p{margin:3px 0 0;color:var(--muted);font-size:12px;line-height:1.45}
+.section-wrap{padding:70px 0}.section-head{text-align:center;max-width:680px;margin:0 auto 35px}.section-head h2{font-size:36px;letter-spacing:-.04em;margin:0 0 10px}.section-head p{color:var(--muted);line-height:1.55}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}.feature{background:white;border:1px solid var(--line);border-radius:18px;padding:22px}.icon{width:38px;height:38px;border-radius:11px;background:var(--brand-soft);display:grid;place-items:center;color:var(--brand);font-weight:900;margin-bottom:14px}.feature h3{margin:0 0 7px;font-size:16px}.feature p{margin:0;color:var(--muted);font-size:13px;line-height:1.55}
+.faq{max-width:760px;margin:auto}.faq details{border-top:1px solid var(--line);padding:18px 0;margin:0}.faq summary{font-size:15px}.faq p{color:var(--muted);font-size:13px;line-height:1.6;margin:12px 0 0}
+.cta{background:#111827;color:white;border-radius:24px;padding:42px;text-align:center}.cta h2{font-size:32px;letter-spacing:-.035em;margin:0 0 10px}.cta p{color:#cbd5e1;max-width:560px;margin:0 auto 22px;line-height:1.55}.cta a{display:inline-block;background:white;color:#111827;border-radius:11px;padding:12px 17px;font-weight:800;font-size:14px}
+footer{padding:28px 0 40px;color:#98a2b3;font-size:12px;text-align:center}
+@media(max-width:850px){.calculator{grid-template-columns:1fr}.results{position:static}.features{grid-template-columns:1fr 1fr}.navlinks{display:none}}
+@media(max-width:560px){.container{width:min(100% - 24px,1120px)}.hero{padding-top:40px}.form,.results{padding:20px}.stats{grid-template-columns:1fr}.features{grid-template-columns:1fr}.cta{padding:30px 20px}.hero-profit{font-size:36px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="container nav">
+    <a class="logo" href="#">Profit<span>Math</span></a>
+    <nav class="navlinks">
+      <a href="#calculator">Calculator</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="container">
+    <span class="eyebrow">Free e-commerce tool</span>
+    <h1>Know exactly how much you make from every sale.</h1>
+    <p>Enter your price, costs, returns and customer acquisition cost. Get a simple estimate of your real profit in seconds.</p>
+    <div class="hero-note">No account required · Beginner-friendly · Multiple currencies</div>
+  </div>
+</section>
+
+<section id="calculator" class="container calculator">
+  <section class="card form">
+    <div class="currencybar">
+      <label for="currency">Currency</label>
+      <select id="currency" aria-label="Currency">
+        <option value="USD">🇺🇸 USD — US Dollar</option>
+        <option value="CAD" selected>🇨🇦 CAD — Canadian Dollar</option>
+        <option value="GBP">🇬🇧 GBP — British Pound</option>
+        <option value="AUD">🇦🇺 AUD — Australian Dollar</option>
+        <option value="EUR">🇪🇺 EUR — Euro</option>
+        <option value="NZD">🇳🇿 NZD — New Zealand Dollar</option>
+      </select>
+    </div>
+
+    <div class="section">
+      <h2>1. What do you sell it for?</h2>
+      <p>The price your customer pays for the product.</p>
+      <div class="field">
+        <label for="price">Selling price <span class="hint">Customer price</span></label>
+        <div class="inputrow"><span class="prefix cur">$</span><input id="price" class="hasprefix" type="number" min="0" step="0.01" value="50"></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>2. What does it cost you?</h2>
+      <p>Your direct costs for making and delivering the sale.</p>
+      <div class="field">
+        <label for="cogs">Product cost <span class="hint">COGS</span></label>
+        <div class="inputrow"><span class="prefix cur">$</span><input id="cogs" class="hasprefix" type="number" min="0" step="0.01" value="15"></div>
+      </div>
+      <div class="field">
+        <label for="shipping">Shipping &amp; fulfillment</label>
+        <div class="inputrow"><span class="prefix cur">$</span><input id="shipping" class="hasprefix" type="number" min="0" step="0.01" value="6"></div>
+      </div>
+      <div class="field">
+        <label for="fee">Payment / store fees</label>
+        <div class="inputrow"><input id="fee" class="hassuffix" type="number" min="0" step="0.1" value="3"><span class="suffix">%</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>3. What happens after the sale?</h2>
+      <p>Use your typical refund or return rate if you have one.</p>
+      <div class="field">
+        <label for="returns">Estimated return / refund rate</label>
+        <div class="inputrow"><input id="returns" class="hassuffix" type="number" min="0" max="100" step="0.1" value="5"><span class="suffix">%</span></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h2>4. What does it cost to get a customer?</h2>
+      <p>Your average advertising or acquisition cost for one customer.</p>
+      <div class="field">
+        <label for="cac">Advertising cost per sale <span class="hint">CAC</span></label>
+        <div class="inputrow"><span class="prefix cur">$</span><input id="cac" class="hasprefix" type="number" min="0" step="0.01" value="12"></div>
+      </div>
+    </div>
+
+    <button class="calc" id="calculate">Calculate my profit</button>
+    <p class="note">Changing currency changes the display currency only. Your numbers are not automatically converted.</p>
+  </section>
+
+  <aside class="card results">
+    <div class="hero-result">
+      <div class="hero-label">Estimated profit per sale</div>
+      <div class="hero-profit" id="profit">$13.00</div>
+      <div class="hero-margin"><strong id="margin">27.4%</strong> profit margin</div>
+      <div class="status" id="status">Profitable at this CAC</div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><span>Customer pays</span><strong id="revenue">$47.50</strong></div>
+      <div class="stat"><span>Total costs</span><strong id="costs">$34.50</strong></div>
+      <div class="stat"><span>You keep</span><strong id="keep">$13.00</strong></div>
+    </div>
+
+    <div class="callout">
+      <div class="title">The number you really need to know</div>
+      <div class="big" id="breakEven">$25.00</div>
+      <p>This is your estimated <strong>break-even CAC</strong> — the most you could spend to acquire a customer before this sale reaches $0 profit.</p>
+    </div>
+
+    <div class="detail">
+      <h3>Advertising picture</h3>
+      <div class="row"><span>Estimated realized ROAS</span><strong id="roas">3.96x</strong></div>
+      <div class="row"><span>Break-even ROAS</span><strong id="breakRoas">1.90x</strong></div>
+      <div class="row"><span>Profit before advertising</span><strong id="preAd">$25.00</strong></div>
+    </div>
+
+    <div class="whatif">
+      <h3>What if I change my price?</h3>
+      <p>Move the slider to see how price changes estimated profit.</p>
+      <input id="priceSlider" type="range" min="10" max="200" step="1" value="50">
+      <div class="rangeval" id="rangeVal">$50</div>
+    </div>
+
+    <details>
+      <summary>What do these terms mean?</summary>
+      <div class="term"><b>COGS</b><p>Cost of goods sold — what the product itself costs you.</p></div>
+      <div class="term"><b>CAC</b><p>Customer acquisition cost — how much you spend to get one customer.</p></div>
+      <div class="term"><b>ROAS</b><p>Return on ad spend — revenue generated for each unit of advertising spend. This calculator uses realized revenue after the estimated return rate.</p></div>
+      <div class="term"><b>Profit margin</b><p>Estimated profit divided by realized revenue.</p></div>
+    </details>
+  </aside>
+</section>
+
+<section id="how-it-works" class="section-wrap">
+  <div class="container">
+    <div class="section-head">
+      <h2>Simple enough to use in 30 seconds.</h2>
+      <p>You don't need accounting knowledge. Just enter the numbers you already know and the calculator handles the math.</p>
+    </div>
+    <div class="features">
+      <div class="feature"><div class="icon">1</div><h3>Enter your sale price</h3><p>Start with the amount your customer pays.</p></div>
+      <div class="feature"><div class="icon">2</div><h3>Add your real costs</h3><p>Include product cost, fulfillment, fees, returns and customer acquisition.</p></div>
+      <div class="feature"><div class="icon">3</div><h3>See what you keep</h3><p>Get estimated profit, margin, break-even CAC and ROAS immediately.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" class="section-wrap" style="padding-top:20px">
+  <div class="container">
+    <div class="section-head"><h2>Questions, answered.</h2></div>
+    <div class="faq">
+      <details><summary>Does changing currency convert my numbers?</summary><p>No. The currency selector changes the denomination and formatting only. If you switch from CAD to USD, a value of 50 remains 50; it is not converted using an exchange rate.</p></details>
+      <details><summary>Is this the same as accounting profit?</summary><p>No. This is a planning calculator designed to estimate unit economics. Taxes, overhead, salaries, storage, returns handling and other business expenses may need to be added separately.</p></details>
+      <details><summary>How is the return rate handled?</summary><p>The current version reduces realized revenue by the estimated return/refund percentage. It does not separately model return shipping, restocking costs or recovered inventory.</p></details>
+      <details><summary>What is break-even CAC?</summary><p>It is the maximum customer acquisition cost that leaves the sale at approximately zero profit under the assumptions you entered.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="container section-wrap" style="padding-top:25px">
+  <div class="cta">
+    <h2>Know your numbers before you scale.</h2>
+    <p>Use the calculator for a quick product check before increasing ad spend, changing prices or launching a new offer.</p>
+    <a href="#calculator">Use the calculator</a>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container">ProfitMath · Free e-commerce profit calculator · For planning purposes only, not accounting or tax advice.</div>
+</footer>
+
+<script>
+const ids = ["price","cogs","shipping","fee","returns","cac"];
+const el = id => document.getElementById(id);
+const num = id => Math.max(0, parseFloat(el(id).value) || 0);
+const currencies = {
+  USD:{locale:"en-US",symbol:"$"}, CAD:{locale:"en-CA",symbol:"$"}, GBP:{locale:"en-GB",symbol:"£"},
+  AUD:{locale:"en-AU",symbol:"$"}, EUR:{locale:"en-IE",symbol:"€"}, NZD:{locale:"en-NZ",symbol:"$"}
+};
+let last = null;
+
+function money(value){
+  const code = el("currency").value;
+  return new Intl.NumberFormat(currencies[code].locale,{style:"currency",currency:code,minimumFractionDigits:2,maximumFractionDigits:2}).format(value);
+}
+function shortMoney(value){
+  const code = el("currency").value;
+  return new Intl.NumberFormat(currencies[code].locale,{style:"currency",currency:code,maximumFractionDigits:0}).format(value);
+}
+function calculate(){
+  const price=num("price"), cogs=num("cogs"), shipping=num("shipping");
+  const feePct=num("fee")/100, returnsPct=Math.min(100,num("returns"))/100, cac=num("cac");
+  const realized=price*(1-returnsPct);
+  const fee=price*feePct;
+  const preAd=Math.max(0,realized-cogs-shipping-fee);
+  const profit=realized-cogs-shipping-fee-cac;
+  const margin=realized>0 ? profit/realized*100 : 0;
+  const breakEven=Math.max(0,preAd);
+  const roas=cac>0 ? realized/cac : Infinity;
+  const breakRoas=breakEven>0 ? realized/breakEven : Infinity;
+  last={price,realized,preAd,profit};
+  el("profit").textContent=money(profit);
+  el("margin").textContent=(Number.isFinite(margin)?margin:0).toFixed(1)+"%";
+  el("revenue").textContent=money(realized);
+  el("costs").textContent=money(realized-profit);
+  el("keep").textContent=money(profit);
+  el("breakEven").textContent=money(breakEven);
+  el("preAd").textContent=money(preAd);
+  el("roas").textContent=Number.isFinite(roas)?roas.toFixed(2)+"x":"—";
+  el("breakRoas").textContent=Number.isFinite(breakRoas)?breakRoas.toFixed(2)+"x":"—";
+  el("status").textContent=profit>0?"Profitable at this CAC":profit===0?"Break-even at this CAC":"Losing money at this CAC";
+  el("status").style.color=profit>0?"var(--green)":profit===0?"var(--amber)":"#b42318";
+  el("priceSlider").value=Math.min(200,Math.max(10,price));
+  el("rangeVal").textContent=shortMoney(price);
+  document.querySelectorAll(".cur").forEach(x=>x.textContent=currencies[el("currency").value].symbol);
+}
+ids.forEach(id=>el(id).addEventListener("input",calculate));
+el("calculate").addEventListener("click",calculate);
+el("currency").addEventListener("change",calculate);
+el("priceSlider").addEventListener("input",()=>{
+  el("price").value=el("priceSlider").value;
+  calculate();
+});
+calculate();
+</script>
+</body>
+</html>
