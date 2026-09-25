@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Free e-commerce profit calculator. Estimate true profit, profit margin, break-even CAC and ROAS for every sale.">
-<title>E-commerce Profit Calculator — Free</title>
+<meta name="description" content="Free e-commerce profit calculator. Calculate profit, margin, break-even CAC and ROAS for every sale. Beginner-friendly and available in multiple currencies.">
+<title>ProfitMath — E-commerce Profit Calculator</title>
 <style>
 :root{
   --bg:#f7f8fb;--surface:#fff;--ink:#111827;--muted:#667085;--line:#e5e7eb;
@@ -57,6 +57,22 @@ details{margin-top:18px;border-top:1px solid var(--line);padding-top:16px}summar
 footer{padding:28px 0 40px;color:#98a2b3;font-size:12px;text-align:center}
 @media(max-width:850px){.calculator{grid-template-columns:1fr}.results{position:static}.features{grid-template-columns:1fr 1fr}.navlinks{display:none}}
 @media(max-width:560px){.container{width:min(100% - 24px,1120px)}.hero{padding-top:40px}.form,.results{padding:20px}.stats{grid-template-columns:1fr}.features{grid-template-columns:1fr}.cta{padding:30px 20px}.hero-profit{font-size:36px}}
+
+.nav-badge{font-size:12px;font-weight:750;color:#475467;background:#f8fafc;border:1px solid var(--line);padding:8px 11px;border-radius:999px}
+.hero-actions{display:flex;justify-content:center;gap:10px;margin-top:25px;flex-wrap:wrap}
+.primary-cta,.secondary-cta{display:inline-flex;align-items:center;gap:8px;padding:13px 18px;border-radius:11px;font-size:14px;font-weight:800}
+.primary-cta{background:var(--brand);color:#fff;box-shadow:0 8px 20px rgba(37,99,235,.2)} .primary-cta:hover{background:var(--brand-dark)}
+.secondary-cta{background:#fff;border:1px solid var(--line);color:#344054}
+.trust-row{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-top:18px;color:#667085;font-size:12px;font-weight:650}.trust-row span:first-child{color:var(--green)}
+.section-kicker{font-size:12px;text-transform:uppercase;letter-spacing:.08em;color:var(--brand);font-weight:850;margin-bottom:8px}
+.example{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:stretch;margin-top:28px}
+.example-card{background:#fff;border:1px solid var(--line);border-radius:20px;padding:25px}.example-card h3{margin:0 0 16px;font-size:18px}
+.example-list{display:grid}.example-line{display:flex;justify-content:space-between;padding:9px 0;border-bottom:1px solid #eef0f3;font-size:13px}.example-line:last-child{border-bottom:0}.example-line span{color:var(--muted)}
+.example-result{background:var(--green-soft);border:1px solid #b7ebca;border-radius:18px;padding:28px;display:flex;flex-direction:column;justify-content:center}
+.example-result .label{font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:var(--green);font-weight:850}.example-result .amount{font-size:43px;line-height:1.05;font-weight:900;letter-spacing:-.045em;margin:6px 0}.example-result p{color:#31543d;font-size:13px;line-height:1.55;margin:0}
+.pill{display:inline-flex;width:max-content;margin-top:14px;padding:7px 10px;border-radius:999px;background:#fff;color:var(--green);font-size:12px;font-weight:800}
+@media(max-width:850px){.nav-badge{display:none}.example{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -65,19 +81,25 @@ footer{padding:28px 0 40px;color:#98a2b3;font-size:12px;text-align:center}
     <a class="logo" href="#">Profit<span>Math</span></a>
     <nav class="navlinks">
       <a href="#calculator">Calculator</a>
-      <a href="#how-it-works">How it works</a>
+      <a href="#why">Why ProfitMath</a>
+      <a href="#tools">Tools</a>
       <a href="#faq">FAQ</a>
     </nav>
+    <div class="nav-badge">Free · No account required</div>
   </div>
 </header>
 
 <main>
 <section class="hero">
   <div class="container">
-    <span class="eyebrow">Free e-commerce tool</span>
-    <h1>Know exactly how much you make from every sale.</h1>
-    <p>Enter your price, costs, returns and customer acquisition cost. Get a simple estimate of your real profit in seconds.</p>
-    <div class="hero-note">No account required · Beginner-friendly · Multiple currencies</div>
+    <span class="eyebrow">Free e-commerce profit calculator</span>
+    <h1>Know your real profit before you spend another dollar on ads.</h1>
+    <p>Calculate profit, margin, break-even CAC and ROAS in seconds. Built for e-commerce sellers who want simple answers, not spreadsheets.</p>
+    <div class="hero-actions">
+      <a class="primary-cta" href="#calculator">Calculate my profit <span>→</span></a>
+      <a class="secondary-cta" href="#how-it-works">See how it works</a>
+    </div>
+    <div class="trust-row"><span>✓ Free</span><span>✓ No account</span><span>✓ Multiple currencies</span></div>
   </div>
 </section>
 
@@ -190,13 +212,63 @@ footer{padding:28px 0 40px;color:#98a2b3;font-size:12px;text-align:center}
 <section id="how-it-works" class="section-wrap">
   <div class="container">
     <div class="section-head">
+      <div class="section-kicker">How it works</div>
       <h2>Simple enough to use in 30 seconds.</h2>
-      <p>You don't need accounting knowledge. Just enter the numbers you already know and the calculator handles the math.</p>
+      <p>You don't need accounting knowledge. Enter the numbers you already know and ProfitMath handles the math.</p>
     </div>
     <div class="features">
-      <div class="feature"><div class="icon">1</div><h3>Enter your sale price</h3><p>Start with the amount your customer pays.</p></div>
+      <div class="feature"><div class="icon">1</div><h3>Enter your sale price</h3><p>Start with the amount your customer actually pays.</p></div>
       <div class="feature"><div class="icon">2</div><h3>Add your real costs</h3><p>Include product cost, fulfillment, fees, returns and customer acquisition.</p></div>
       <div class="feature"><div class="icon">3</div><h3>See what you keep</h3><p>Get estimated profit, margin, break-even CAC and ROAS immediately.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="why" class="section-wrap" style="padding-top:20px">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-kicker">Why ProfitMath</div>
+      <h2>Most calculators give you a number. ProfitMath helps you understand it.</h2>
+      <p>Built around the numbers e-commerce sellers actually care about, without hiding the math behind a black box.</p>
+    </div>
+    <div class="features">
+      <div class="feature"><div class="icon">✓</div><h3>Simple</h3><p>No accounting terminology required. Every important metric is explained in plain English.</p></div>
+      <div class="feature"><div class="icon">↗</div><h3>Practical</h3><p>See the effect of price, acquisition cost, returns and fulfillment on every sale.</p></div>
+      <div class="feature"><div class="icon">=</div><h3>Transparent</h3><p>We show the assumptions and formulas so you can understand exactly what the result means.</p></div>
+    </div>
+    <div class="section-head" style="margin-top:70px;margin-bottom:18px">
+      <div class="section-kicker">Example</div><h2>Is this product actually profitable?</h2>
+    </div>
+    <div class="example">
+      <div class="example-card"><h3>Example order</h3><div class="example-list">
+        <div class="example-line"><span>Selling price</span><strong>$50.00</strong></div>
+        <div class="example-line"><span>Product cost</span><strong>$15.00</strong></div>
+        <div class="example-line"><span>Fulfillment</span><strong>$6.00</strong></div>
+        <div class="example-line"><span>Store / payment fees</span><strong>3%</strong></div>
+        <div class="example-line"><span>Estimated returns</span><strong>5%</strong></div>
+        <div class="example-line"><span>CAC</span><strong>$12.00</strong></div>
+      </div></div>
+      <div class="example-result"><div class="label">Estimated profit</div><div class="amount">$13.00</div>
+        <p>That's a <strong>27.4% estimated profit margin</strong> after the assumptions above.</p>
+        <span class="pill">Break-even CAC: $25.00</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="tools" class="section-wrap" style="padding-top:20px">
+  <div class="container">
+    <div class="section-head"><div class="section-kicker">The ProfitMath toolkit</div>
+      <h2>More tools for e-commerce sellers.</h2>
+      <p>We're building a practical calculator hub for the numbers that matter most when you're selling online.</p>
+    </div>
+    <div class="features">
+      <div class="feature"><div class="icon">✓</div><h3>Profit Calculator</h3><p>Know your profit per sale. <strong>Available now.</strong></p></div>
+      <div class="feature"><div class="icon">ROAS</div><h3>Break-Even ROAS</h3><p>Find the advertising efficiency you need to stay profitable. <strong>Coming soon.</strong></p></div>
+      <div class="feature"><div class="icon">$</div><h3>Product Pricing</h3><p>Work backward from a target profit margin to a selling price. <strong>Coming soon.</strong></p></div>
+      <div class="feature"><div class="icon">INV</div><h3>Inventory Reorder</h3><p>Estimate when it's time to reorder before you run out. <strong>Coming soon.</strong></p></div>
+      <div class="feature"><div class="icon">CAC</div><h3>Maximum CAC</h3><p>See how much you can afford to spend to acquire a customer. <strong>Coming soon.</strong></p></div>
+      <div class="feature"><div class="icon">ROI</div><h3>ROI Calculator</h3><p>Understand the return generated by your investment. <strong>Coming soon.</strong></p></div>
     </div>
   </div>
 </section>
@@ -205,6 +277,8 @@ footer{padding:28px 0 40px;color:#98a2b3;font-size:12px;text-align:center}
   <div class="container">
     <div class="section-head"><h2>Questions, answered.</h2></div>
     <div class="faq">
+      <details><summary>How do I calculate e-commerce profit?</summary><p>Start with the revenue you expect to realize, then subtract your product cost, fulfillment, payment or store fees, customer acquisition cost and any other costs you choose to model. ProfitMath puts the core unit economics into one simple calculation.</p></details>
+      <details><summary>What is a good profit margin for an e-commerce product?</summary><p>There isn't one universal target. Your margin depends on your product, advertising costs, returns, fulfillment, overhead and business model.</p></details>
       <details><summary>Does changing currency convert my numbers?</summary><p>No. The currency selector changes the denomination and formatting only. If you switch from CAD to USD, a value of 50 remains 50; it is not converted using an exchange rate.</p></details>
       <details><summary>Is this the same as accounting profit?</summary><p>No. This is a planning calculator designed to estimate unit economics. Taxes, overhead, salaries, storage, returns handling and other business expenses may need to be added separately.</p></details>
       <details><summary>How is the return rate handled?</summary><p>The current version reduces realized revenue by the estimated return/refund percentage. It does not separately model return shipping, restocking costs or recovered inventory.</p></details>
@@ -223,7 +297,7 @@ footer{padding:28px 0 40px;color:#98a2b3;font-size:12px;text-align:center}
 </main>
 
 <footer>
-  <div class="container">ProfitMath · Free e-commerce profit calculator · For planning purposes only, not accounting or tax advice.</div>
+  <div class="container">ProfitMath · Free e-commerce calculators · For planning purposes only, not accounting or tax advice.</div>
 </footer>
 
 <script>
